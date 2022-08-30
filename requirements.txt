@@ -1,5 +1,5 @@
 carbontracker~=1.1.6
-imblearn>=0.7
+imblearn~=0.0
 sklearn~=0.0
 scikit-learn~=1.1.1
 numpy~=1.22.3
