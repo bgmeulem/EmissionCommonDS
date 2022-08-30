@@ -31,7 +31,7 @@ run_ct()
 {
 # run with carbontracker
 echo "running script with CarbonTracker coverage" &&
-sudo python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&  # try without sudo?
+python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&  # try without sudo?
 return 0
 }
 
