@@ -203,10 +203,13 @@ def run_w_carbontracker(func, suffix):
 
 def run(max_card=20, n_folds=5, oversample=.3, max_skew=7., seed=987514,
         n_explore=1, n_process=1, n_train=1,
-        sample=None):
+        sample=0):
     assert all([n >= 1 for n in (n_explore, n_process, n_train)]), \
         "n_explore, n_process and n_train must all be larger than 1"
-    X_train, X_test, y_train, y_test, train_df = read_data("Data/DSC_2021_Training.xlsx", sample=sample)
+    if sample != 0:
+        X_train, X_test, y_train, y_test, train_df = read_data("Data/DSC_2021_Training.xlsx", sample=sample)
+    else:
+        X_train, X_test, y_train, y_test, train_df = read_data("Data/DSC_2021_Training.xlsx")
 
     ##############################################################################################
     plot_distribution_of_features(train_df)
@@ -231,7 +234,7 @@ def run(max_card=20, n_folds=5, oversample=.3, max_skew=7., seed=987514,
 if __name__ == "__main__":
     argument_parser = argparse.ArgumentParser(description='run a simulated data science project')
     argument_parser.add_argument('--suffix', default=1, help='index of the runfile, suffix of logs')
-    argument_parser.add_argument('--sample', default=None, help="subsample the dataset", type=int)
+    argument_parser.add_argument('--sample', default=0, help="subsample the dataset", type=int)
     argument_parser.add_argument('--use_ct', default=False, const=True, nargs='?',
                                  help="Run the automated code while logging the power usage "
                                       "with CarbonTracker")

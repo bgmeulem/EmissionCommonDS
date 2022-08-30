@@ -17,7 +17,7 @@ run_rapl() {
 run_ct() {
 # run with carbontracker
 echo "running script with CarbonTracker coverage" &&
-sudo -E PATH="$PATH" python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-None}" &&
+sudo -E PATH="$PATH" python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:0}" &&
 return 0
 }
 
