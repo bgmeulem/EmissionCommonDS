@@ -31,7 +31,7 @@ run_ct()
 {
 # run with carbontracker
 echo "running script with CarbonTracker coverage" &&
-python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&  # try without sudo?
+sudo python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&  # try without sudo?
 return 0
 }
 
@@ -61,7 +61,7 @@ run()
   print_hardware
   make_directories
   # run with RAPL
-  run_rapl "$1" "$2"
+  # run_rapl "$1" "$2"
   # run with carbontracker
   run_ct "$1" "$2"
   return 0
