@@ -16,7 +16,7 @@ run_rapl()
   sudo mkdir -p AutomationOutputs/rapl_"$1"
   echo "starting powerstat" &
   # start up powerstat, redirect output to txt file, prevent output from showing in terminal
-  sudo powerstat -DRgf -d=0 1 500 | sudo tee AutomationOutputs/rapl_"$1"/rapl_output_"$1".txt > /dev/null &
+  sudo powerstat -DRgf -d=0 1 7200 | sudo tee AutomationOutputs/rapl_"$1"/rapl_output_"$1".txt > /dev/null &
   echo "running script with RAPL coverage" &&
   echo "waiting for script to finish" &&
   sudo -E PATH="$PATH" python3 dsc.py --sample="${2:-0}" &&
@@ -31,25 +31,39 @@ run_ct()
 {
 # run with carbontracker
 echo "running script with CarbonTracker coverage" &&
-sudo -E PATH="$PATH" python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&
+python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&  # try without sudo?
 return 0
 }
 
-run()
+install_dependencies()
 {
   echo "installing powerstat"
   sudo apt install powerstat
   echo "installing dependencies"
   pip3 install -r requirements.txt
-  sudo lshw -xml | sudo tee lshw.xml > /dev/null  # print out hardware info
+}
+
+print_hardware()
+{
+    sudo lshw -xml | sudo tee lshw.xml > /dev/null  # print out hardware info
+}
+
+make_directories()
+{
   sudo mkdir AutomationOutputs
   sudo mkdir Plots
   sudo mkdir Model_Info
+}
+
+run()
+{
+  install_dependencies
+  print_hardware
+  make_directories
   # run with RAPL
   run_rapl "$1" "$2"
   # run with carbontracker
   run_ct "$1" "$2"
-
   return 0
 }
 
@@ -72,7 +86,7 @@ if test -f "AutomationOutputs/rapl_$1/rapl_output_$1.txt"; then
   return 1
 else
   start=$SECONDS
-  run "$1" "$2"
+  run "$1" "$2" &&
   duration=$(( SECONDS - start ))
   echo
   echo "Finished in $duration seconds"
