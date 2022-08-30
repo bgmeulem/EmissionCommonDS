@@ -28,7 +28,7 @@ run_rapl()
 }
 
 run_ct()
- {
+{
 # run with carbontracker
 echo "running script with CarbonTracker coverage" &&
 sudo -E PATH="$PATH" python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&
@@ -68,7 +68,14 @@ while getopts ":h" option; do
 done
 
 if test -f "AutomationOutputs/rapl_$1/rapl_output_$1.txt"; then
-  echo "suffix $1 already exists"
+  echo "suffix $1 already exists! Aborting..."
+  return 1
 else
+  start=$SECONDS
   run "$1" "$2"
+  duration=$(( SECONDS - start ))
+  echo
+  echo "Finished in $duration seconds"
 fi
+
+return 0
