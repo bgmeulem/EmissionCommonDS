@@ -1,4 +1,17 @@
-run_rapl() {
+Help()
+{
+   # Display Help
+   echo "Add description of the script functions here."
+   echo
+   echo "Syntax: scriptTemplate [suffix| -sample-size]"
+   echo "options:"
+   echo "suffix          Suffix of the experiment."
+   echo "sample-size     Subsample the dataset for testing purposes"
+   echo
+}
+
+run_rapl()
+{
 # run with RAPL
   sudo mkdir -p AutomationOutputs/rapl_"$1"
   echo "starting powerstat" &
@@ -14,12 +27,26 @@ run_rapl() {
   return 0
 }
 
-run_ct() {
+run_ct()
+ {
 # run with carbontracker
 echo "running script with CarbonTracker coverage" &&
 sudo -E PATH="$PATH" python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&
 return 0
 }
+
+
+# Get the options
+while getopts ":h" option; do
+   case $option in
+      h) # display Help
+         Help
+         exit;;
+     \?) # incorrect option
+         echo "Error: Invalid option"
+         exit;;
+   esac
+done
 
 echo "installing powerstat"
 sudo apt install powerstat
@@ -30,10 +57,7 @@ sudo mkdir AutomationOutputs
 sudo mkdir Plots
 sudo mkdir Model_Info
 
-for i in 1
-do
-  # run with RAPL
-  run_rapl $i "$1"
-  # run with carbontracker
-  run_ct $i "$1"
-done
+# run with RAPL
+run_rapl "$1" "$2"
+# run with carbontracker
+run_ct "$1" "$2"
