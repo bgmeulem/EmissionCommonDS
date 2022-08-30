@@ -35,6 +35,24 @@ sudo -E PATH="$PATH" python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}"
 return 0
 }
 
+run()
+{
+  echo "installing powerstat"
+  sudo apt install powerstat
+  echo "installing dependencies"
+  pip3 install -r requirements.txt
+  sudo lshw -xml | sudo tee lshw.xml > /dev/null  # print out hardware info
+  sudo mkdir AutomationOutputs
+  sudo mkdir Plots
+  sudo mkdir Model_Info
+  # run with RAPL
+  run_rapl "$1" "$2"
+  # run with carbontracker
+  run_ct "$1" "$2"
+
+  return 0
+}
+
 
 # Get the options
 while getopts ":h" option; do
@@ -48,16 +66,8 @@ while getopts ":h" option; do
    esac
 done
 
-echo "installing powerstat"
-sudo apt install powerstat
-echo "installing dependencies"
-pip3 install -r requirements.txt
-sudo lshw -xml | sudo tee lshw.xml > /dev/null  # print out hardware info
-sudo mkdir AutomationOutputs
-sudo mkdir Plots
-sudo mkdir Model_Info
-
-# run with RAPL
-run_rapl "$1" "$2"
-# run with carbontracker
-run_ct "$1" "$2"
+if test -f "AutomationOutputs/rapl_$1/rapl_output_$1.txt"; then
+  echo "suffix $1 already exists"
+else
+  run "$1" "$2"
+fi
