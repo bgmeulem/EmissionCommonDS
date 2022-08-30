@@ -28,7 +28,7 @@ pip3 install -r requirements.txt
 sudo lshw -xml | sudo tee lshw.xml > /dev/null  # print out hardware info
 sudo mkdir AutomationOutputs
 sudo mkdir Plots
-sudo mkdir ModelInfo
+sudo mkdir Model_Info
 
 for i in 1
 do
