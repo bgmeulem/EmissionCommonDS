@@ -7,3 +7,4 @@ matplotlib~=3.5.2
 pandas~=1.4.1
 seaborn~=0.11.2
 category_encoders
+openpyxl~=3.0.10
