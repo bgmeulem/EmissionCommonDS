@@ -61,7 +61,7 @@ run()
   print_hardware
   make_directories
   # run with RAPL
-  # run_rapl "$1" "$2"
+  run_rapl "$1" "$2"
   # run with carbontracker
   run_ct "$1" "$2"
   return 0
