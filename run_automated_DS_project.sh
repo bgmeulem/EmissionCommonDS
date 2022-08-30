@@ -5,8 +5,8 @@ Help()
    echo
    echo "Syntax: scriptTemplate [suffix| -sample-size]"
    echo "options:"
-   echo "suffix          Suffix of the experiment."
-   echo "sample-size     Subsample the dataset for testing purposes"
+   echo "suffix          Suffix of the experiment. Must be a new suffix."
+   echo "sample-size     Subsample the dataset for testing purposes. Not passing this parameter is equivalent to no sampling"
    echo
 }
 
