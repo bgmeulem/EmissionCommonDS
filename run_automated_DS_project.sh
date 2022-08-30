@@ -54,7 +54,8 @@ run()
 }
 
 
-# Get the options
+# Get the options, check if -h flag is passed
+# Probably can be done more elegantly by assigning options to variables but eh
 while getopts ":h" option; do
    case $option in
       h) # display Help
