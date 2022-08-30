@@ -27,6 +27,7 @@ echo "installing dependencies"
 pip3 install -r requirements.txt
 sudo lshw -xml | sudo tee lshw.xml > /dev/null  # print out hardware info
 sudo mkdir AutomationOutputs
+sudo mkdir Plots
 
 for i in 1
 do

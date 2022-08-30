@@ -117,10 +117,10 @@ def process(X_train, X_test, y_train, train_df,
 def dummy_train(X_s, y_s, X_test, y_test, preprocessing_transformers):
     model = LogisticRegression().fit(X_s, y_s)
     score = model.score(X_test, y_test)
-    plot_confusion_matrix(model, "dummy logistic regression", X_test, y_test, score)
-    plot_roc(model, "dummy logistic regression", X_test, y_test)
+    plot_confusion_matrix(model, "dummy_logistic_regression", X_test, y_test, score)
+    plot_roc(model, "dummy_logistic_regression", X_test, y_test)
     show_importance(model, "dummy logistic regression", colnames=get_feature_names(preprocessing_transformers))
-    make_prediction(model, preprocessing_transformers, "dummy logistic regression")
+    make_prediction(model, preprocessing_transformers, "dummy_logistic_regression")
 
 
 def train_and_tune(X_s, y_s, X_test, y_test, preprocessing_transformers, n_folds, seed):
