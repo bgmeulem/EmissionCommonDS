@@ -40,7 +40,7 @@ install_dependencies()
   echo "installing powerstat"
   sudo apt install powerstat
   echo "installing dependencies"
-  pip install -r requirements.txt
+  sudo -E PATH="$PATH" python3 -m pip install -r requirements.txt
 }
 
 print_hardware()
