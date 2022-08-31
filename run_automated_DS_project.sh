@@ -84,9 +84,6 @@ if test -f "AutomationOutputs/rapl_$1/rapl_output_$1.txt"; then
   echo "suffix $1 already exists! Aborting..."
   return 1
 else
-  venv=$(which python3)
-  source $venv
-  echo "Python sourced to $venv"
   start=$SECONDS
   run "$1" "$2" &&
   duration=$(( SECONDS - start ))
