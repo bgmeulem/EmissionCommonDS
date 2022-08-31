@@ -1,4 +1,3 @@
-#!/home/bjorge/.virtualenvs/DSTest/bin/python
 Help()
 {
    # Display Help
