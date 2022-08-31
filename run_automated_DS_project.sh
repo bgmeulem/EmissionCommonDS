@@ -1,5 +1,3 @@
-#!/home/bjorge/.virtualenvs/DSTest/bin/python3
-
 Help()
 {
    # Display Help
@@ -69,6 +67,7 @@ run()
   return 0
 }
 
+#!/home/bjorge/.virtualenvs/DSTest/bin/python3
 
 # Get the options, check if -h flag is passed
 # Probably can be done more elegantly by assigning options to variables but eh
