@@ -59,8 +59,8 @@ make_directories()
 run()
 {
   install_dependencies
-  print_hardware "$1"
   make_directories
+  print_hardware "$1"
   # run with RAPL
   run_rapl "$1" "$2"
   # run with carbontracker
