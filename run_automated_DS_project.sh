@@ -45,7 +45,8 @@ install_dependencies()
 
 print_hardware()
 {
-    sudo lshw -xml | sudo tee lshw.xml > /dev/null  # print out hardware info
+    sudo mkdir -p AutomationOutputs/hardware_"$1"
+    sudo lshw -xml | sudo tee AutomationOutputs/hardware_"$1"/lshw.xml > /dev/null  # print out hardware info
 }
 
 make_directories()
@@ -58,7 +59,7 @@ make_directories()
 run()
 {
   install_dependencies
-  print_hardware
+  print_hardware "$1"
   make_directories
   # run with RAPL
   run_rapl "$1" "$2"
