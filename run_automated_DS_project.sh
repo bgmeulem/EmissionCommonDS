@@ -67,8 +67,6 @@ run()
   return 0
 }
 
-#!/home/bjorge/.virtualenvs/DSTest/bin/python3
-
 # Get the options, check if -h flag is passed
 # Probably can be done more elegantly by assigning options to variables but eh
 while getopts ":h" option; do
@@ -86,6 +84,7 @@ if test -f "AutomationOutputs/rapl_$1/rapl_output_$1.txt"; then
   echo "suffix $1 already exists! Aborting..."
   return 1
 else
+  workon DSTest
   start=$SECONDS
   run "$1" "$2" &&
   duration=$(( SECONDS - start ))
