@@ -31,7 +31,7 @@ run_ct()
 {
 # run with carbontracker
 echo "running script with CarbonTracker coverage" &&
-python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&  # try without sudo?
+sudo -E PATH="$PATH" python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&  # try without sudo?
 return 0
 }
 
@@ -40,7 +40,7 @@ install_dependencies()
   echo "installing powerstat"
   sudo apt install powerstat
   echo "installing dependencies"
-  sudo python3 -m pip install -r requirements.txt
+  sudo -E PATH="$PATH" python3 -m pip install -r requirements.txt
 }
 
 print_hardware()
