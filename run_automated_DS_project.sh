@@ -1,3 +1,4 @@
+#!/home/bjorge/.virtualenvs/DSTest/bin/python
 Help()
 {
    # Display Help
@@ -19,7 +20,7 @@ run_rapl()
   sudo powerstat -DRgf -d=0 1 7200 | sudo tee AutomationOutputs/rapl_"$1"/rapl_output_"$1".txt > /dev/null &
   echo "running script with RAPL coverage" &&
   echo "waiting for script to finish" &&
-  python3 dsc.py --sample="${2:-0}" &&
+  sudo -E PATH="$PATH" python3 dsc.py --sample="${2:-0}" &&
   echo "script finished, killing processes..."
   sudo pkill -f powerstat ;
   sudo pkill -f dsc.py ;
