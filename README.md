@@ -8,7 +8,7 @@ sudo -E PATH=$PATH ./run_automated_DS_project.sh [suffix] [-sample]
 
 Todo:
 
-- Test automated DS project:
-  - Make requirements.txt
-- Run on multiple hardwares
+- ~~Test automated DS project:~~
+  - ~~Make requirements.txt~~
+- Run on multiple hardwares: now doing...
 - Make projection based on multiple hardwares
