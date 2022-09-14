@@ -24,7 +24,7 @@ pd.set_option("display.precision", 2)
 
 def read_data(f="Data/DSC_2021_Training.xlsx", sample=None):
     X_train, X_test, y_train, y_test = split_train_test(f, sample=sample)  # also writes Train.csv and Test.csv
-    train_df = pd.read_csv('Data/Train.csv').drop(['LoanID', 'Unnamed: 0'], axis=1)  # for column statistics
+    train_df = pd.read_csv('Data/Train.csv').drop(['ID', 'Unnamed: 0'], axis=1)  # for column statistics
 
     # test_df = pd.read_csv('Data/Test.csv').drop(['LoanID', 'Unnamed: 0'], axis=1)
     return X_train, X_test, y_train, y_test, train_df
@@ -33,29 +33,12 @@ def read_data(f="Data/DSC_2021_Training.xlsx", sample=None):
 def process(X_train, X_test, y_train, train_df,
             max_card=20, oversample=.3, max_skew=7., seed=987514):
     SKEWED_COLS = get_skewed_cols(X_train, max_skew)
-    NOMINAL = ['Type', 'Managing_Sales_Office_Nbr', 'Postal_Code_L',
-               'Product_Desc', 'CREDIT_TYPE_CD', 'FINANCIAL_PRODUCT_TYPE_CD',
-               'INDUSTRY_CD_3', 'INDUSTRY_CD_4',
-               'ACCOUNT_PURPOSE_CD', 'A2_MARITAL_STATUS_CD', 'A2_EMPLOYMENT_STATUS_CD',
-               'A2_RESIDENT_STATUS_CD']  # features that will get normal nominal treatment
-    CONTINUOUS = ['BEH_SCORE_AVG_A1', 'BEH_SCORE_AVG_A2', 'BEH_SCORE_MIN_A2', 'FHS_SCORE_AVG', 'FHS_SCORE_LATEST',
-                  'CASH_FLOW_AMT', 'FREE_CASH_FLOW_AMT', 'A1_AVG_POS_SALDO_PROF_1_AMT',
-                  'Invest_Amt', 'Original_loan_Amt', 'MTHS_FIRST_PCX_COREPRIV_CNT', 'A1_TOT_DEB_INTEREST_PROF_6_AMT',
-                  'A2_MTHS_SNC_LAST_LIQ_PRIV_CNT', 'A2_MTHS_SNC_FIRST_COREPROF_CNT', 'A1_TOT_DEB_INTEREST_PROF_1_AMT',
-                  'MTHS_IN_BUSINESS_CNT', 'A2_MTHS_SNC_LAST_LIQ_SAVE_CNT', 'A1_NEGAT_TRANS_COREPROF_CNT',
-                  'A1_OVERDRAWN_DAYS_PROF_24_CNT', 'A1_OVERDRAWN_DAYS_PROF_6_CNT', 'A1_AVG_NEG_SALDO_PROF_3_AMT',
-                  'A1_AVG_POS_SALDO_PROF_12_AMT', 'CASHFLOW_MONTHLY_CREDIT_RT',
-                  'MONTHLY_CREDIT_AMT_TOT', 'A2_ANNUAL_INCOME_AMT_scale',
-                  'A2_AVG_NEG_SALDO_PRIV_12_AMT_scale', 'A2_AVG_POS_SALDO_SAVINGS_12_AMT_scale',
-                  'A2_TOTAL_EMPLOYMENT_MONTHS_CNT_scale'
-                  # ,MTHS_SNC_LAST_REFUSAL_CNT
-                  ]  # features that will get normal continuous treatment
+    NOMINAL = ["REMOVED FOR PRIVACY"]  # features that will get normal nominal treatment
+    CONTINUOUS = ["REMOVED FOR PRIVACY"]  # features that will get normal continuous treatment
     LOW_CARD = [col for col in NOMINAL if len(train_df[col].unique()) <= max_card]
     HIGH_CARD = [col for col in NOMINAL if len(train_df[col].unique()) > max_card]
-    FILL_W_ZERO = ['A1_TOT_STND_PAYMNT_INT_PROF_CNT',  # if no info, assume no standing payments
-                   'MTHS_SNC_1ST_REC_CNT'  # assume they're not in database yet
-                   ]
-    ONEHOT_CONT = ['MONTHS_SINCE_LAST_REFUSAL_CNT']
+    FILL_W_ZERO = ["REMOVED FOR PRIVACY"]
+    ONEHOT_CONT = ['REMOVED FOR PRIVACY']
 
     low_card_pipeline = Pipeline([
         ("imputer", SimpleImputer(strategy="most_frequent")),
@@ -131,7 +114,7 @@ def train_and_tune(X_s, y_s, X_test, y_test, preprocessing_transformers, n_folds
         'rf': RandomForestClassifier
     }
     HYPERPARAM1 = {
-        "rf": {"n_estimators": [100, 1000, 1500, 2000],
+        "rf": {"n_estimators": [100, 500, 1000, 2000],
                "max_depth": [10, 50, 100],
                "min_samples_split": [2, 10],
                "random_state": [seed]
@@ -155,7 +138,7 @@ def train_and_tune(X_s, y_s, X_test, y_test, preprocessing_transformers, n_folds
                "C": [10 ** e for e in np.linspace(-1, 1, 5)],
                "max_iter": [80, 100, 120]
                },
-        "knn": {"n_neighbors": [10],
+        "knn": {"n_neighbors": [10, 20, 50],
                 "p": [1]
                 },
     }

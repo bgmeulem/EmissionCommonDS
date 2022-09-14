@@ -10,13 +10,28 @@ Help()
    echo
 }
 
+seconds_to_hms()
+{
+   T=$1
+   D=$((T/60/60/24))
+   H=$((T/60/60%24))
+   M=$((T/60%60))
+   S=$((T%60))
+
+   if [ ${D} != 0 ];
+   then
+      printf '%d days %02d:%02d:%02d' $D $H $M $S
+   else
+      printf '%02d:%02d:%02d' $H $M $S
+   fi
+}
+
 run_rapl()
 {
 # run with RAPL
-  sudo mkdir -p AutomationOutputs/rapl_"$1"
   echo "starting powerstat" &
   # start up powerstat, redirect output to txt file, prevent output from showing in terminal
-  sudo powerstat -DRgf -d=0 1 7200 | sudo tee AutomationOutputs/rapl_"$1"/rapl_output_"$1".txt > /dev/null &
+  sudo powerstat -DRgf -d=0 1 7200 | sudo tee AutomationOutputs/"$1"/rapl_output_"$1".txt > /dev/null &
   echo "running script with RAPL coverage" &&
   echo "waiting for script to finish" &&
   sudo -E PATH="$PATH" python3 dsc.py --sample="${2:-0}" &&
@@ -31,7 +46,7 @@ run_ct()
 {
 # run with carbontracker
 echo "running script with CarbonTracker coverage" &&
-sudo -E PATH="$PATH" python3 dsc.py --use_ct --suffix="ct_$1" --sample="${2:-0}" &&  # try without sudo?
+sudo -E PATH="$PATH" python3 dsc.py --use_ct --suffix="$1" --sample="${2:-0}" &&  # try without sudo?
 return 0
 }
 
@@ -45,8 +60,7 @@ install_dependencies()
 
 print_hardware()
 {
-    sudo mkdir -p AutomationOutputs/hardware_"$1"
-    sudo lshw -xml | sudo tee AutomationOutputs/hardware_"$1"/lshw.xml > /dev/null  # print out hardware info
+    sudo lshw -xml | sudo tee AutomationOutputs/"$1"/hardware.xml > /dev/null  # print out hardware info
 }
 
 make_directories()
@@ -81,15 +95,18 @@ while getopts ":h" option; do
    esac
 done
 
-if test -f "AutomationOutputs/rapl_$1/rapl_output_$1.txt"; then
+if test -f "AutomationOutputs/$1"; then
   echo "suffix $1 already exists! Aborting..."
   return 1
 else
-  start=$SECONDS
+  sudo mkdir -p AutomationOutputs/"$1"
+  start=$(date +%s)
   run "$1" "$2" &&
-  duration=$(( SECONDS - start ))
+  end=$(date +%s)
+  duration=$(( end - start ))
   echo
-  echo "Finished in $duration seconds"
+  echo "Finished in "
+  seconds_to_hms $duration
 fi
 
 return 0
