@@ -1,13 +1,64 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
+title: >-
+  How sustainable is “common” data science in terms of power
+  consumption?
+message: 'If you use this software, please cite it as below.'
+type: software
 authors:
-- family-names: "Meulemeester"
-  given-names: "Bjorge"
-  orcid: "https://orcid.org/0000-0003-3935-2006"
-- family-names: "Martens"
-  given-names: "David"
-  orcid: "https://orcid.org/0000-0001-8397-2937"
-title: "How sustainable is “common” data science in terms of power consumption?"
+  - family-names: Meulemeester
+    given-names: Bjorge
+    orcid: 'https://orcid.org/0000-0003-3935-2006'
+  - family-names: Martens
+    given-names: David
+    orcid: 'https://orcid.org/0000-0001-8397-2937'
+identifiers:
+  - type: doi
+    value: 10.1016/j.suscom.2023.100864
+    description: >-
+      Published in Sustainable Computing: Informatics and
+      Systems
+url: 'https://github.com/bgmeulem/EmissionCommonDS'
+abstract: >-
+  Continuous developments in data science have brought forth
+  an exponential increase in complexity of machine learning
+  models. Additionally, data scientists have become
+  ubiquitous in the private market and academic
+  environments. All of these trends are on a steady rise,
+  and are associated with an increase in power consumption
+  and associated carbon footprint. The increasing carbon
+  footprint of large-scale advanced data science has already
+  received attention, but the latter trend has not. This
+  work aims to estimate the contribution of the increasingly
+  popular “common” data science to the global carbon
+  footprint. To this end, the power consumption of several
+  typical tasks in the aforementioned common data science
+  tasks are measured and compared to: large-scale “advanced”
+  data science, common computer-related tasks, and everyday
+  non-computer related tasks. An automated data science
+  project is also run on various hardware architectures. To
+  assess its sustainability in terms of carbon emission, the
+  measurements are converted to and an equivalent unit of
+  “km driven by car”. Our main findings are: “common” data
+  science consumes 2.57 more power than regular computer
+  usage, but less than some common everyday power-consuming
+  tasks such as lighting or heating; advanced data science
+  consumes substantially more power than common data
+  science, and can be either on par or vastly surpass common
+  everyday power-consuming tasks, depending on the scale of
+  the project. In addition to the reporting of these
+  results, this work also aims to inspire researchers to
+  include power usage and estimated carbon emission as a
+  secondary result in their work.
+keywords:
+  - ai
+  - sustainable
+  - carbon
+  - emission
+  - co2
+  - data science
+license: CC-BY-NC-ND-4.0
 version: 2.0.4
-url: "https://github.com/bgmeulem/EmissionCommonDS"
-date-released: 2022-09-06
+date-released: '2022-09-06'
